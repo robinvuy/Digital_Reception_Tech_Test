@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback Summary Charts</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h2 { font-size: 16px; margin-top: 30px; }
+    canvas { max-width: 700px; margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <h1>Feedback Summary</h1>
+  <div id="charts"></div>
+
+  <script>
+    const summary = {
+      "Please confirm that you have notified the relevant staff, including the Manager where necessary of the works you are undertaking and any elements they need to be aware of": { "Yes": 1 },
+      "Has a suitable Risk Assessment been undertaken for the works or are the works covered by the B&M Care Trade Specific Risk Assessments": { "Yes": 1 },
+      "Please confirm that the proposed Mitigation Measures in the Risk Assessment reduces the risk to all persons and the environment to an acceptable level": { "Yes": 1 },
+      "Please describe the Mitigation Measures you have put in place to reduce the risks to all persons and the environment to an acceptable level": { "zfvsd": 1 },
+      "Do you feel the care provided is effective?": { "1/5 Stars": 15, "2/5 Stars": 11, "3/5 Stars": 11, "4/5 Stars": 14, "5/5 Stars": 12 },
+      "Could you explain why you felt dissatisfied?": { "XYZ": 1 },
+      "How satisfied are you overall with our facilities?": { "Very unhappy": 25, "Very happy": 7, "Unhappy": 15, "Happy": 16 },
+      "Do you feel the care home keeps people safe?": { "5/5 Stars": 17, "4/5 Stars": 7, "2/5 Stars": 15, "1/5 Stars": 10, "3/5 Stars": 14 },
+      "Do you feel the care home is responsive to peoples needs?": { "5/5 Stars": 20, "1/5 Stars": 11, "3/5 Stars": 9, "2/5 Stars": 13, "4/5 Stars": 10 },
+      "Do you feel the care home is caring towards people?": { "Two thumbs down": 17, "No thumbs up": 9, "One thumb up": 15, "One thumb down": 10, "Two thumbs up": 12 },
+      "Do you feel the care home is well-led?": { "1/5 Stars": 12, "4/5 Stars": 15, "3/5 Stars": 13, "5/5 Stars": 14, "2/5 Stars": 9 },
+      "Please say how you are feeling?": { "Very unhappy": 9, "Happy": 19, "Very happy": 23, "Unhappy": 15, "Neutral": 5 },
+      "Do you have any other feedback on your visit?": { "The home was excellent, and I would be recommend it to all my friends": 62 },
+      "Do you consent to having your temperature taken?": { "No": 21, "Yes": 12 },
+      "Please enter the reference code from the Lateral Flow Test": { "N/A": 33 },
+      "What is your temperature?": { "N/A": 33 },
+      "Do you have a NEGATIVE Lateral Flow Test result taken today?": { "No": 12, "Yes": 21 }
+    };
+
+    const container = document.getElementById('charts');
+
+    Object.keys(summary).forEach(function(question, i) {
+      const h2 = document.createElement('h2');
+      h2.textContent = question;
+      container.appendChild(h2);
+
+      const canvas = document.createElement('canvas');
+      canvas.id = 'chart' + i;
+      container.appendChild(canvas);
+
+      new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(summary[question]),
+          datasets: [{
+            label: question,
+            data: Object.values(summary[question]),
+            backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true, ticks: { precision: 0 } } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
